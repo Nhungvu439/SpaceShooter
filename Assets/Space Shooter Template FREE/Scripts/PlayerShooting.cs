@@ -2,41 +2,58 @@
 
 public class PlayerShooting : MonoBehaviour
 {
-    // Singleton để Bonus.cs gọi được
+    // Singleton
     public static PlayerShooting instance;
 
+    [Header("Bullet Settings")]
     public GameObject bulletPrefabs;
+    public float shootingInterval;
+    public Vector3 bulletOffset;
 
-    public float shootingInterval = 0.2f;
+    [Header("Weapon Power")]
+    public int weaponPower = 1;
+    public int maxweaponPower = 5;
+
     private float lastBulletTime;
-
-    public int weaponPower = 1;       // số đạn hiện tại
-    public int maxweaponPower = 3;    // số đạn tối đa
 
     private void Awake()
     {
-        instance = this;
+        // Singleton setup
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Update()
     {
         if (Input.GetMouseButton(0))
         {
-            if (Time.time - lastBulletTime > shootingInterval)
-            {
-                ShootBullet();
-                lastBulletTime = Time.time;
-            }
+            UpdateFiring();
+        }
+    }
+
+    private void UpdateFiring()
+    {
+        if (Time.time - lastBulletTime > shootingInterval)
+        {
+            ShootBullet();
+            lastBulletTime = Time.time;
         }
     }
 
     private void ShootBullet()
     {
+        // Bắn nhiều đạn theo weaponPower
         for (int i = 0; i < weaponPower; i++)
         {
             Instantiate(
                 bulletPrefabs,
-                transform.position,
+                transform.position + bulletOffset,
                 transform.rotation
             );
         }
