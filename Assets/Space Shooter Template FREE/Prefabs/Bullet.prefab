@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3662960325244631380}
   - component: {fileID: 9061497542820678449}
   m_Layer: 0
-  m_Name: Player_Short_Lazer
+  m_Name: Bullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

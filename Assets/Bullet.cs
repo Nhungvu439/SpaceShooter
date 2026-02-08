@@ -1,14 +1,17 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     public float flySpeed;
+    public int damage;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        var newPosition = transform.position;
-        newPosition.y += Time.deltaTime * flySpeed;
-        transform.position = newPosition;
+        var enemy = collision.GetComponent<EnemyHealth>();
+        if (enemy != null)
+        {
+            enemy.TakeDamage(damage);
+        }
+        Destroy(gameObject);
     }
 }
