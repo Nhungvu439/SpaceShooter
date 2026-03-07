@@ -1,10 +1,24 @@
 ﻿using UnityEngine;
+using System;
 
-public class PlayerHealth : Health
+public class PlayerHealth : MonoBehaviour
 {
-    protected override void Die()
+    public int health = 100;
+
+    public event Action onDead;
+
+    public void TakeDamage(int damage)
     {
-        base.Die();
-        Debug.Log("Player died");
+        health -= damage;
+
+        if (health <= 0)
+        {
+            if (onDead != null)
+            {
+                onDead();
+            }
+
+            Destroy(gameObject);
+        }
     }
 }
